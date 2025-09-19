@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenarc Minecraft Server</title>
+    <title>Zenarc | Under Construction</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,42 +14,53 @@
         }
         h1 {
             color: #00c2ff;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
         p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             max-width: 600px;
-            margin: 20px auto;
-            line-height: 1.5;
+            margin: 15px auto;
+            line-height: 1.6;
+            color: #cccccc;
         }
-        code {
-            background: #1e1e1e;
-            padding: 4px 6px;
-            border-radius: 4px;
+        .highlight {
             color: #00ff90;
+            font-weight: bold;
         }
         .note {
-            margin-top: 40px;
+            margin-top: 50px;
             font-size: 0.9em;
-            color: #aaaaaa;
+            color: #888888;
+        }
+        .loader {
+            margin: 40px auto;
+            border: 6px solid #333;
+            border-top: 6px solid #00c2ff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <h1>Zenarc Minecraft Server</h1>
+    <h1>🚧 Zenarc is Under Construction 🚧</h1>
+    <div class="loader"></div>
     <p>
-        This subdomain is used for connecting to a <strong>private Minecraft server</strong> hosted locally.  
-        The server is accessible only to a small group of friends (2–3 people).  
+        Welcome to <span class="highlight">zenarc.is-a.dev</span>!  
+        This website is currently being built. Soon, it will become my personal space to showcase my projects, skills, and journey as a <strong>Computer Engineering student</strong>.
     </p>
     <p>
-        We use <strong>Cloudflare Tunnel</strong> because port forwarding is not possible on our network.  
-        The tunnel securely routes traffic to our game server without exposing our home IP address.
-    </p>
-    <p>
-        Server Address (private use only): <code>zenarc.is-a.dev</code>
+        For now, this is just a placeholder page while I set everything up.  
+        Stay tuned for updates!
     </p>
     <div class="note">
-        ⚠️ This server is not open to the public.  
-        It’s a hobby project for personal learning and private multiplayer gaming.
+        ✨ Powered by GitHub Pages · Domain via <code>is-a.dev</code>
     </div>
 </body>
 </html>
