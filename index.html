@@ -6,12 +6,180 @@
     <title>Arnav | Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%235ce1e6'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="root"></div>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" data-presets="react" src="app.js"></script>
+    <canvas id="particles"></canvas>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <div class="page-wrap">
+        <header class="site-header">
+            <div class="site-brand">
+                <span class="dot"></span> arnv.dev
+            </div>
+            <nav class="site-nav">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">&#9788;</span>
+                </button>
+            </nav>
+        </header>
+
+        <section class="hero-card">
+            <div class="hero-glow"></div>
+            <div class="hero-copy">
+                <p class="pretitle">Hello, I'm <span class="highlight">Arnav</span></p>
+                <h1>
+                    Building modern web experiences,
+                    <span class="typing-text" id="typingText"></span>
+                </h1>
+                <p>Computer Engineering student who loves blending code, design, and game development. I build interactive websites, experiment with game mechanics in Roblox, and create native experiences like the macOS music player Flow.</p>
+                <div class="actions">
+                    <a class="btn" href="#projects">See Projects</a>
+                    <a class="btn-secondary" href="#contact">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="section-header">
+                <small>01</small>
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a <strong>Computer Engineering student</strong> with a passion for creating interactive digital experiences. My journey spans from building web applications to crafting game mechanics in Roblox Studio.</p>
+                    <p>When I'm not coding, you'll find me exploring new technologies, designing user interfaces, or brainstorming the next big game feature. I believe in learning by building and sharing knowledge with the community.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="3">0</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="8">0</span>
+                        <span class="stat-label">Skills</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="100">0</span>
+                        <span class="stat-label">% Passion</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="section-header">
+                <small>02</small>
+                <h2>Skills</h2>
+            </div>
+            <div class="interactive-panel">
+                <p>Filter skills by category and explore the areas I'm actively growing in. Click a category to filter!</p>
+                <div class="skill-filter" id="skillFilter"></div>
+            </div>
+            <div class="skills-grid" id="skillsGrid"></div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="section-header">
+                <small>03</small>
+                <h2>Featured Work</h2>
+            </div>
+            <div class="projects-controls">
+                <div class="project-filter" id="projectFilter"></div>
+                <div class="search-box">
+                    <input type="text" id="projectSearch" placeholder="Search projects..." />
+                </div>
+            </div>
+            <div class="projects-grid" id="projectsGrid"></div>
+        </section>
+
+        <section class="section fun-section">
+            <div class="section-header">
+                <small>04</small>
+                <h2>Have Fun</h2>
+            </div>
+            <div class="fun-grid">
+                <div class="fun-card interactive-panel">
+                    <h3>Mood Switcher</h3>
+                    <p>Change the vibe of the entire site with one click. Watch colors, shadows, and animations respond instantly.</p>
+                    <div class="mood-options" id="moodOptions"></div>
+                    <div class="mood-display">
+                        Current mood: <strong id="currentMood">Creative</strong>
+                    </div>
+                </div>
+                <div class="fun-card interactive-panel">
+                    <h3>Quick Math</h3>
+                    <p>Test your brain! Solve the equation below as fast as you can.</p>
+                    <div class="math-game" id="mathGame">
+                        <div class="math-problem" id="mathProblem"></div>
+                        <input type="text" id="mathAnswer" placeholder="Your answer" />
+                        <button class="btn" id="mathSubmit">Submit</button>
+                        <div class="math-feedback" id="mathFeedback"></div>
+                    </div>
+                </div>
+                <div class="fun-card interactive-panel">
+                    <h3>Type Racer</h3>
+                    <p>Type the quote as fast and accurately as you can. Hit Enter when done.</p>
+                    <div class="type-racer" id="typeRacer">
+                        <div class="quote-display" id="quoteDisplay"></div>
+                        <textarea id="typeInput" placeholder="Start typing here..." rows="3"></textarea>
+                        <div class="type-stats">
+                            <span>WPM: <strong id="wpm">0</strong></span>
+                            <span>Accuracy: <strong id="accuracy">100</strong>%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fun-card interactive-panel">
+                    <h3>Clicker Game</h3>
+                    <p>Click the button as many times as you can in 10 seconds. Go!</p>
+                    <div class="clicker-game" id="clickerGame">
+                        <button class="clicker-btn" id="clickerBtn">CLICK ME!</button>
+                        <div class="clicker-stats">
+                            <span>Clicks: <strong id="clickCount">0</strong></span>
+                            <span>Time: <strong id="clickTimer">10</strong>s</span>
+                        </div>
+                        <button class="btn-secondary" id="clickerReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="section-header">
+                <small>05</small>
+                <h2>Contact</h2>
+            </div>
+            <div class="contact-panel">
+                <p>Want to collaborate or learn more about my projects? Send me a message and I'll get back as soon as I can.</p>
+                <div class="contact-links">
+                    <a href="mailto:arnav@example.com" class="contact-link">
+                        <span class="contact-icon">&#9993;</span> arnav@example.com
+                    </a>
+                    <a href="https://github.com/arnv-dev" target="_blank" rel="noreferrer" class="contact-link">
+                        <span class="contact-icon">&#9733;</span> github.com/arnv-dev
+                    </a>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" placeholder="Your Name" required />
+                    <input type="email" placeholder="Your Email" required />
+                    <textarea placeholder="Your Message" rows="4" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Built with vanilla HTML, CSS, and JavaScript. No frameworks, just pure code.</p>
+            <p class="footer-small">&#169; 2025 Arnav. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
