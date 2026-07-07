@@ -3,64 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenarc | Under Construction</title>
+    <title>Arnav | Resume Portfolio</title>
     <style>
+        :root {
+            --bg: #080a12;
+            --surface: rgba(255, 255, 255, 0.06);
+            --surface-strong: rgba(255, 255, 255, 0.12);
+            --text: #e8f1ff;
+            --muted: #98a8c4;
+            --accent: #5ce1e6;
+            --accent-strong: #52c6ff;
+            --border: rgba(255, 255, 255, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #0e0e0e;
-            color: #f5f5f5;
-        }
-        h1 {
-            color: #00c2ff;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2em;
-            max-width: 600px;
-            margin: 15px auto;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, rgba(92, 225, 230, 0.18), transparent 25%),
+                        linear-gradient(180deg, #0b0e19 0%, #07090f 100%);
+            color: var(--text);
             line-height: 1.6;
-            color: #cccccc;
+            min-height: 100vh;
+            padding: 0 24px;
         }
-        .highlight {
-            color: #00ff90;
-            font-weight: bold;
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 40px 0 80px;
         }
-        .note {
-            margin-top: 50px;
-            font-size: 0.9em;
-            color: #888888;
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 52px;
         }
-        .loader {
-            margin: 40px auto;
-            border: 6px solid #333;
-            border-top: 6px solid #00c2ff;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1.2s linear infinite;
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .brand span {
+            display: inline-flex;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+        }
+
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.2s ease;
+        }
+
+        nav a:first-child {
+            margin-left: 0;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 44px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 36px 80px rgba(0, 0, 0, 0.24);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 4vw, 4.4rem);
+            margin-bottom: 20px;
+            letter-spacing: -0.05em;
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .button,
+        .button-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #09101b;
+            box-shadow: 0 18px 40px rgba(92, 225, 230, 0.22);
+        }
+
+        .button-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .button:hover,
+        .button-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+        }
+
+        section {
+            margin-top: 56px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+
+        .section-heading small {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.78rem;
+        }
+
+        .section-heading h2 {
+            font-size: 2rem;
+            letter-spacing: -0.04em;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .intro-card,
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            padding: 28px;
+        }
+
+        .intro-card p,
+        .card p {
+            color: var(--muted);
+        }
+
+        .skill-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+        }
+
+        .skill-pill {
+            padding: 16px 18px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .project-card h3 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            flex: 1;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .project-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            margin-top: 64px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        @media (min-width: 900px) {
+            .hero {
+                padding: 60px;
+            }
+            .grid-2 {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>🚧 Zenarc is Under Construction 🚧</h1>
-    <div class="loader"></div>
-    <p>
-        Welcome to <span class="highlight">zenarc.is-a.dev</span>!  
-        This website is currently being built. Soon, it will become my personal space to showcase my projects, skills, and journey as a <strong>Computer Engineering student</strong>.
-    </p>
-    <p>
-        For now, this is just a placeholder page while I set everything up.  
-        Stay tuned for updates!
-    </p>
-    <div class="note">
-        ✨ Powered by GitHub Pages · Domain via <code>is-a.dev</code>
+    <div class="container">
+        <header>
+            <div class="brand"><span></span> arnv.dev</div>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+
+        <main class="hero">
+            <h1>Hi, I’m Arnav — a Computer Engineering student building polished digital experiences.</h1>
+            <p>I create clean, modern portfolio websites and software projects that are easy to maintain, simple to use, and impressive to share. This site is the beginning of my resume portfolio, ready for new skills, projects, and achievements.</p>
+            <div class="buttons">
+                <a class="button" href="#contact">Let’s Connect</a>
+                <a class="button-secondary" href="#projects">View Projects</a>
+            </div>
+        </main>
+
+        <section id="about">
+            <div class="section-heading">
+                <small>01</small>
+                <h2>About Me</h2>
+            </div>
+            <div class="intro-card">
+                <p>Hello! I am a Computer Engineering student with a passion for web development, embedded systems, and code that solves real problems. I am learning every day and using this portfolio as a living resume to showcase my evolving skills and projects.</p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-heading">
+                <small>02</small>
+                <h2>Skills</h2>
+            </div>
+            <div class="skill-list">
+                <div class="skill-pill">HTML</div>
+                <div class="skill-pill">CSS</div>
+                <div class="skill-pill">JavaScript</div>
+                <div class="skill-pill">C Programming</div>
+                <div class="skill-pill">Python</div>
+                <div class="skill-pill">Git & GitHub</div>
+                <div class="skill-pill">Responsive Design</div>
+                <div class="skill-pill">Learning UI/UX</div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-heading">
+                <small>03</small>
+                <h2>Featured Work</h2>
+            </div>
+            <div class="grid grid-2">
+                <div class="card project-card">
+                    <h3>Personal Portfolio</h3>
+                    <p>A responsive resume website built to showcase my profile, skills, and future projects. Designed to be easy to update as I learn more.</p>
+                    <div class="project-links">
+                        <a href="#skills">Add Skills</a>
+                        <a href="#contact">Get in Touch</a>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>GitHub Pages Resume</h3>
+                    <p>This site is deployed using GitHub Pages. It is a great foundation for a developer resume that evolves with every new project and certification.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/arnv-dev/zenarc-site" target="_blank" rel="noreferrer">Source Code</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-heading">
+                <small>04</small>
+                <h2>Contact</h2>
+            </div>
+            <div class="card">
+                <p>If you want to collaborate, hire me for a project, or just say hello, reach out anytime. I’m building this portfolio as a showcase for what I’m learning and what I will build next.</p>
+                <p>Email: <a href="mailto:arnav@example.com" style="color: var(--accent); text-decoration: none;">arnav@example.com</a></p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Built with GitHub Pages · A growing resume portfolio for Arnav</p>
+        </footer>
     </div>
 </body>
 </html>
