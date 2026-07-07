@@ -11,22 +11,22 @@ const skills = [
 
 const projects = [
     {
-        title: '50 Shades of Zombies',
-        description: 'A Roblox game where players survive waves of zombies, upgrade weapons, and explore custom levels. I handle gameplay mechanics, progression, and polish in Roblox Studio.',
-        repo: 'https://github.com/arnv-dev/50-shades-of-zombies.git',
-        tags: ['Roblox', 'Game', 'Lua'],
-    },
-    {
         title: 'Flow',
-        description: 'A macOS music player built with sleek controls, rhythm-inspired visuals, and smooth playback. Flow shows how I combine design with native application development.',
-        repo: 'https://github.com/arnv-dev/Flow.git',
-        tags: ['macOS', 'App', 'UI'],
+        description: 'A native macOS music player with smooth controls, polished visuals, and a focus on playback ease. This project demonstrates app design, media controls, and UI polish.',
+        repo: 'https://github.com/arnv-dev/Flow',
+        tags: ['macOS', 'App', 'Music'],
     },
     {
-        title: 'Portfolio Website',
-        description: 'A modern online resume built with vanilla HTML, CSS, and JavaScript. This site is designed to grow as I add new work and skills.',
+        title: 'Current Portfolio',
+        description: 'This portfolio website is built with vanilla HTML, CSS, and JavaScript to showcase my projects, skills, and development progress. It is the live example of my current web work.',
         repo: 'https://github.com/arnv-dev/zenarc-site.git',
-        tags: ['Web', 'Portfolio', 'Interactive'],
+        tags: ['Web', 'Portfolio', 'Resume'],
+    },
+    {
+        title: '50 Shades of Zombies',
+        description: 'A Roblox zombie shooter where waves get tougher and the player progresses by clearing each level. It combines wave-based combat, progression, and replayable action.',
+        repo: 'https://github.com/arnv-dev/50-shades-of-zombies',
+        tags: ['Roblox', 'Game', 'Shooter'],
     },
 ];
 
@@ -58,13 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillFilter();
     initProjectFilter();
     renderProjects();
-    initMoodSwitcher();
-    initMathGame();
-    initTypeRacer();
-    initClickerGame();
+    initThemeToggle();
     initScrollAnimations();
     initNavHighlight();
-    initContactForm();
     initStatsAnimation();
 });
 
@@ -108,7 +104,15 @@ function initParticles() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(92, 225, 230, ${this.opacity})`;
+            const themeParticleColor = getComputedStyle(document.documentElement)
+                .getPropertyValue('--particle-color')
+                .trim() || 'rgba(92, 225, 230, 0.18)';
+            const match = themeParticleColor.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+            if (match) {
+                ctx.fillStyle = `rgba(${match[1]}, ${match[2]}, ${match[3]}, ${this.opacity})`;
+            } else {
+                ctx.fillStyle = themeParticleColor;
+            }
             ctx.fill();
         }
     }
@@ -538,20 +542,40 @@ function initNavHighlight() {
     });
 }
 
-function initContactForm() {
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('button');
-        const originalText = btn.textContent;
-        btn.textContent = 'Message Sent!';
-        btn.style.background = 'linear-gradient(135deg, #34d399, #22d3ee)';
-        
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
-            form.reset();
-        }, 2000);
+function initThemeToggle() {
+    const toggle = document.getElementById('themeToggle');
+    const icon = toggle.querySelector('.theme-icon');
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+
+    function setTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        icon.textContent = theme === 'light' ? '☀' : '🌙';
+    }
+
+    setTheme(initialTheme);
+    updateContactIcons();
+
+    toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.dataset.theme || 'dark';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        updateContactIcons();
+    });
+}
+
+function updateContactIcons() {
+    const theme = document.documentElement.dataset.theme || 'dark';
+    const imgs = document.querySelectorAll('img.contact-icon[data-icon]');
+    imgs.forEach(img => {
+        const name = img.getAttribute('data-icon');
+        // follow convention: images/<name>-white.png for dark theme, <name>-black.png for light
+        const suffix = theme === 'light' ? 'black' : 'white';
+        const candidate = `images/${name}-${suffix}.png`;
+        // check if file likely exists by attempting to set it; browser will handle 404 gracefully
+        img.src = candidate;
     });
 }
 
