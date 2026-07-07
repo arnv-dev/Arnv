@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'https://esm.sh/react@18.3.1';
-import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client';
+const { useEffect, useMemo, useState } = React;
+const { createRoot } = ReactDOM;
 
 const skills = [
   { label: 'HTML', category: 'Web' },
