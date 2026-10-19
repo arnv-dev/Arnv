@@ -1,0 +1,202 @@
+:root {
+  /* Smriti Rawat Warm Editorial Palette */
+  --bg-cream: #F7F3EB;
+  --bg-cream-pure: #FAF8F5;
+  --bg-cream-dark: #ECE5D8;
+  --bg-card: #FFFFFF;
+  --bg-card-muted: #F2EDE4;
+  --bg-dark: #141413;
+  --bg-dark-card: #1E1D1B;
+  
+  --text-primary: #2E2D2B;
+  --text-secondary: #5F5B53;
+  --text-muted: #8E897E;
+  --text-light: #F7F3EB;
+  --text-light-muted: #9E9B93;
+  
+  --border-subtle: #E2DDD2;
+  --border-grid: #E8E2D5;
+  --border-strong: #CDC5B6;
+  --border-dark: #2C2B28;
+  
+  --accent-lime: #C5F467;
+  --accent-forest: #365B43;
+  --accent-rust: #D05938;
+  --accent-blue: #3E668B;
+  --accent-gold: #C28E34;
+  
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-hand: 'Yellowtail', cursive;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --shadow-sm: 0 2px 8px rgba(46, 45, 43, 0.04);
+  --shadow-md: 0 8px 24px rgba(46, 45, 43, 0.06);
+  --shadow-lg: 0 16px 40px rgba(46, 45, 43, 0.08);
+  --shadow-float: 0 14px 44px rgba(46, 45, 43, 0.12);
+  --shadow-dark: 0 16px 40px rgba(0, 0, 0, 0.35);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Subtle architectural grid pattern background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, var(--border-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-grid) 1px, transparent 1px);
+  background-size: 54px 54px;
+  background-position: 0 0;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--text-primary);
+  color: var(--bg-cream);
+}
+
+/* Links & Buttons */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Typography Helpers */
+.font-serif { font-family: var(--font-serif); }
+.font-hand { font-family: var(--font-hand); }
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-sans); }
+
+/* Layout containers */
+.container-narrow {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container-wide {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Section Common */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: var(--bg-card-muted);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+
+.section-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.section-desc {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 620px;
+  line-height: 1.65;
+}
+
+/* Tactile sticker badge effect */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 2px 3px 0 rgba(46, 45, 43, 0.15);
+  border: 1px dashed rgba(46, 45, 43, 0.2);
+  transform: rotate(-1.5deg);
+  transition: transform var(--transition-bounce);
+}
+
+.sticker:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9px;
+  border: 2px solid var(--bg-cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

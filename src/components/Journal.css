@@ -1,0 +1,961 @@
+/* ===================================================
+   JOURNAL & ABOUT SECTION (EDITORIAL HARDCOVER NOTEBOOK)
+   Fluid 3D Book Opening Animations & Handcrafted Layout
+   =================================================== */
+
+.journal-wrapper {
+  position: relative;
+  background-color: var(--bg-cream);
+  padding-top: 40px;
+  padding-bottom: 120px;
+  overflow: hidden;
+}
+
+.journal-inner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+/* ===================================================
+   1. CLOSED BOOK SCENE (SCREENSHOT 3)
+   =================================================== */
+.closed-book-scene {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  width: 100%;
+}
+
+.book-cover-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  cursor: pointer;
+  filter: drop-shadow(0 22px 50px rgba(32, 44, 61, 0.18));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  user-select: none;
+}
+
+.book-cover-wrap:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 30px 60px rgba(32, 44, 61, 0.26));
+}
+
+.journal-cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+}
+
+.book-hover-cta {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: var(--bg-cream);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.book-cover-wrap:hover .book-hover-cta {
+  opacity: 1;
+  bottom: -16px;
+}
+
+/* ===================================================
+   2. OPEN SPREAD SCENE (HANDCRAFTED 2-PAGE SPREAD)
+   =================================================== */
+.open-spread-scene {
+  width: 100%;
+  max-width: 1060px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  perspective: 2200px;
+  perspective-origin: 50% 45%;
+  position: relative;
+}
+
+/* Header bar above open journal */
+.open-journal-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.journal-spread-tag {
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  color: #7D786E;
+  font-weight: 500;
+}
+
+.close-journal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.close-journal-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-cream);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+/* ===================================================
+   3. HANDCRAFTED NOTEBOOK CHASSIS & FLUID OPENING
+   =================================================== */
+.handcrafted-notebook {
+  position: relative;
+  width: 100%;
+  margin: 8px 0 24px 0;
+  transform-style: preserve-3d;
+  filter: 
+    drop-shadow(0 32px 75px rgba(32, 28, 23, 0.24))
+    drop-shadow(0 12px 28px rgba(32, 28, 23, 0.12));
+}
+
+/* State: OPENING ANIMATION (Fluid 3D Book Unfold) */
+.open-spread-scene.view-opening .handcrafted-notebook {
+  animation: bookUnfold3D 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bookUnfold3D {
+  0% {
+    transform: scale(0.82) translateY(32px) rotateX(8deg);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.01) translateY(-4px) rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* State: CLOSING ANIMATION (Fluid 3D Book Fold Shut) */
+.open-spread-scene.view-closing .handcrafted-notebook {
+  animation: bookFoldClose3D 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes bookFoldClose3D {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.82) translateY(28px) rotateX(8deg);
+    opacity: 0;
+  }
+}
+
+/* ===================================================
+   4. SILK RIBBON BOOKMARKS WITH PENDULUM SWAY
+   =================================================== */
+.notebook-ribbon-top-wrap {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.notebook-ribbon-top {
+  display: block;
+  width: 40px;
+  height: auto;
+}
+
+.notebook-ribbon-bottom-wrap {
+  position: absolute;
+  bottom: -46px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2.5deg);
+  transform-origin: top center;
+  z-index: 15;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2));
+}
+
+.notebook-ribbon-bottom {
+  display: block;
+  width: 40px;
+  height: auto;
+}
+
+.open-spread-scene.view-opening .notebook-ribbon-bottom-wrap {
+  animation: ribbonDropSwing 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes ribbonDropSwing {
+  0% {
+    transform: translateX(-50%) rotate(18deg) scaleY(0.9);
+  }
+  30% {
+    transform: translateX(-50%) rotate(-12deg) scaleY(1.06);
+  }
+  55% {
+    transform: translateX(-50%) rotate(7deg) scaleY(0.98);
+  }
+  75% {
+    transform: translateX(-50%) rotate(-3deg) scaleY(1.02);
+  }
+  90% {
+    transform: translateX(-50%) rotate(3deg) scaleY(0.99);
+  }
+  100% {
+    transform: translateX(-50%) rotate(2.5deg) scaleY(1.0);
+  }
+}
+
+/* ===================================================
+   5. OUTER LEATHER COVER & 2-PAGE PAPER STACK
+   =================================================== */
+.notebook-leather-cover {
+  position: relative;
+  padding: 16px 18px;
+  background: linear-gradient(145deg, #2D2A26 0%, #211F1C 55%, #181715 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* Strictly 2 Columns (Left Page & Right Page) */
+.notebook-paper-stack {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #FDFCF8;
+  border-radius: 12px;
+  min-height: 590px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  box-shadow: 
+    0 1px 0 #EADBCA,
+    0 2px 0 #E2D2BD,
+    0 3px 0 #D9C7AF,
+    0 4px 0 #D0BCA3,
+    0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Central Spine Fold & Shadow Gutter */
+.notebook-spine-crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.05) 28%,
+    rgba(0, 0, 0, 0.22) 50%,
+    rgba(0, 0, 0, 0.05) 72%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: 8;
+  pointer-events: none;
+}
+
+.spine-stitch-line {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spine-stitch-dot {
+  width: 2.5px;
+  height: 4.5px;
+  border-radius: 1px;
+  background-color: rgba(46, 45, 43, 0.32);
+}
+
+/* ===================================================
+   6. 3D FLUID UNROLLING PAGES (LEFT & RIGHT)
+   =================================================== */
+.notebook-page {
+  position: relative;
+  padding: 42px 46px 36px 46px;
+  background-color: #FDFCF8;
+  background-image: radial-gradient(circle, rgba(58, 55, 50, 0.075) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  min-height: 590px;
+}
+
+/* Left Page (Column 1) */
+.notebook-page.left-page {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: inset -28px 0 32px -18px rgba(0, 0, 0, 0.08);
+  transform-origin: right center;
+}
+
+.open-spread-scene.view-opening .notebook-page.left-page {
+  animation: leftPageUnroll 0.72s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+}
+
+@keyframes leftPageUnroll {
+  0% {
+    transform: rotateY(50deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.open-spread-scene.view-closing .notebook-page.left-page {
+  animation: leftPageFoldBack 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes leftPageFoldBack {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(45deg);
+  }
+}
+
+/* Right Page (Column 2) */
+.notebook-page.right-page {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: inset 28px 0 32px -18px rgba(0, 0, 0, 0.08);
+  transform-origin: left center;
+}
+
+.open-spread-scene.view-opening .notebook-page.right-page {
+  animation: rightPageUnroll 0.72s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
+}
+
+@keyframes rightPageUnroll {
+  0% {
+    transform: rotateY(-40deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.open-spread-scene.view-closing .notebook-page.right-page {
+  animation: rightPageFoldBack 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes rightPageFoldBack {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-35deg);
+  }
+}
+
+/* Dynamic Page Lighting Overlays */
+.page-lighting-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+}
+
+.open-spread-scene.view-opening .page-lighting-overlay {
+  animation: pageLightSweep 0.72s ease forwards;
+}
+
+@keyframes pageLightSweep {
+  0% {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.06));
+    opacity: 1;
+  }
+  100% {
+    background: transparent;
+    opacity: 0;
+  }
+}
+
+.page-inner-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.right-page-layout {
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===================================================
+   7. LEFT PAGE EDITORIAL CONTENT
+   =================================================== */
+.author-header {
+  margin-bottom: 20px;
+}
+
+.journal-author-script {
+  font-family: var(--font-hand);
+  font-size: clamp(2.3rem, 3.8vw, 3.1rem);
+  color: #2E2D2B;
+  margin: 0 0 6px 0;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.journal-role-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.journal-role-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #E8F0FE;
+  color: #1A73E8;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(26, 115, 232, 0.2);
+}
+
+.journal-years-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #55524C;
+  border: 1.5px dashed #1A73E8;
+  padding: 2.5px 10px;
+  border-radius: var(--radius-full);
+}
+
+/* Career Timeline */
+.journal-timeline-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin: 0 0 22px 0;
+  position: relative;
+  padding-left: 6px;
+}
+
+.journal-timeline-list::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 9px;
+  width: 1.5px;
+  border-left: 1.5px dashed rgba(26, 115, 232, 0.35);
+  pointer-events: none;
+}
+
+.timeline-entry {
+  display: flex;
+  align-items: center;
+  font-size: 0.86rem;
+  color: #383531;
+  position: relative;
+  z-index: 1;
+}
+
+.t-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1A73E8;
+  margin-right: 12px;
+  box-shadow: 0 0 0 3px #FDFCF8;
+  flex-shrink: 0;
+}
+
+.t-company {
+  font-weight: 500;
+  flex: 1;
+  padding-right: 12px;
+}
+
+.t-years {
+  font-size: 0.78rem;
+  color: #7D7972;
+}
+
+/* Taped Contact Note */
+.taped-contact-note {
+  position: relative;
+  background: #FFFDF9;
+  border: 1px solid #E5DEC9;
+  padding: 12px 16px;
+  border-radius: 4px;
+  box-shadow: 2px 4px 12px rgba(46, 45, 43, 0.06);
+  max-width: 290px;
+  transform: rotate(-1.5deg);
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.taped-contact-note:hover {
+  transform: rotate(-0.5deg) scale(1.02);
+  box-shadow: 3px 6px 18px rgba(46, 45, 43, 0.1);
+}
+
+.tape-strip {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 18px;
+  background: rgba(235, 225, 205, 0.8);
+  border: 1px solid rgba(200, 190, 170, 0.5);
+  border-radius: 2px;
+  backdrop-filter: blur(1px);
+}
+
+.contact-note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.contact-pin-label {
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  color: #8C867B;
+  font-weight: 600;
+}
+
+.copy-action-indicator {
+  color: #7D7972;
+  display: flex;
+  align-items: center;
+}
+
+.copy-action-indicator .text-emerald {
+  color: #10B981;
+}
+
+.note-line {
+  font-size: 0.78rem;
+  color: #4A463F;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.email-line {
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.copy-toast-inline {
+  display: block;
+  font-size: 0.68rem;
+  color: #10B981;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Today Box */
+.today-thought-bubble {
+  background: rgba(249, 248, 245, 0.9);
+  border: 1px solid #E5DFD3;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(46, 45, 43, 0.03);
+  margin-bottom: 8px;
+}
+
+.bubble-dots {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.b-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.b-dot.red { background: #FF5F56; }
+.b-dot.yellow { background: #FFBD2E; }
+.b-dot.green { background: #27C93F; }
+
+.bubble-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #9E978C;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.bubble-quote {
+  font-size: 0.78rem;
+  color: #4A463F;
+  line-height: 1.45;
+  margin: 4px 0 6px 0;
+}
+
+.handwritten-advice {
+  font-size: 1.15rem;
+  color: var(--accent-rust);
+  display: block;
+}
+
+/* Page Numbers */
+.page-footer-num {
+  font-size: 0.72rem;
+  color: #A6A094;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+.right-page .page-footer-num {
+  align-self: flex-end;
+}
+
+/* ===================================================
+   8. RIGHT PAGE CONTENT & STICKERS POP-IN
+   =================================================== */
+
+/* Polaroid Photo Frame - Exact 941x1335 Portrait Image Ratio */
+.polaroid-frame {
+  position: relative;
+  background: #FFFFFF;
+  padding: 10px 10px 24px 10px;
+  border-radius: 4px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+  transform: rotate(2deg);
+  text-align: center;
+  width: 180px;
+  z-index: 2;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.open-spread-scene.view-opening .polaroid-frame {
+  animation: stickerSpringIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.32s backwards;
+}
+
+.polaroid-frame:hover {
+  transform: rotate(0deg) scale(1.04);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+}
+
+.washi-tape-polaroid {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 64px;
+  height: 17px;
+  background: rgba(225, 215, 195, 0.75);
+  border: 1px dashed rgba(180, 170, 150, 0.5);
+  border-radius: 2px;
+}
+
+.polaroid-photo-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 941 / 1335;
+  height: auto;
+  background: #1E1D1B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.polaroid-avatar-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 941 / 1335;
+  object-fit: contain;
+  display: block;
+  border-radius: 2px;
+}
+
+.polaroid-gloss-glint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.polaroid-badge {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.74rem;
+  color: #6E685E;
+}
+
+/* Stickers Cluster */
+.page-stickers-cluster {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sticker-item {
+  position: absolute;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+}
+
+.open-spread-scene.view-opening .sticker-folder {
+  animation: stickerSpringIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.38s backwards;
+}
+.open-spread-scene.view-opening .sticker-terminal {
+  animation: stickerSpringIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.44s backwards;
+}
+.open-spread-scene.view-opening .sticker-coffee {
+  animation: stickerSpringIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.50s backwards;
+}
+.open-spread-scene.view-opening .sticker-gaming {
+  animation: stickerSpringIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.56s backwards;
+}
+.open-spread-scene.view-opening .sticker-tech {
+  animation: stickerSpringIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.62s backwards;
+}
+
+@keyframes stickerSpringIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.sticker-item:hover {
+  transform: scale(1.15) rotate(6deg) !important;
+  z-index: 10;
+}
+
+.sticker-img {
+  display: block;
+  user-select: none;
+}
+
+.sticker-label {
+  font-size: 0.66rem;
+  color: #7D7972;
+  margin-top: 3px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+/* Specific Sticker Positions */
+.sticker-folder {
+  top: 36px;
+  left: 28px;
+  transform: rotate(-7deg);
+}
+
+.sticker-folder img {
+  width: 62px;
+  height: auto;
+}
+
+.sticker-terminal {
+  top: 38px;
+  right: 28px;
+  transform: rotate(6deg);
+  background: #1E1D1B;
+  color: #38EF7D;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #FFFFFF;
+}
+
+.sticker-terminal .term-mini-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.sticker-terminal .sticker-label {
+  background: transparent;
+  color: #A3A3A3;
+  margin-top: 1px;
+}
+
+.sticker-coffee {
+  bottom: 45px;
+  left: 36px;
+  transform: rotate(8deg);
+}
+
+.sticker-coffee img {
+  width: 58px;
+  height: auto;
+}
+
+.sticker-gaming {
+  bottom: 48px;
+  right: 32px;
+  transform: rotate(-6deg);
+  background: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid #E2DDD2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sticker-gaming .gaming-emoji {
+  font-size: 1.1rem;
+}
+
+.sticker-gaming .sticker-label {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-size: 0.7rem;
+  color: #383531;
+  font-weight: 600;
+}
+
+.sticker-tech {
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%) rotate(4deg);
+}
+
+.tech-chip {
+  background: #FFF7ED;
+  border: 1px solid #FDBA74;
+  color: #C2410C;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+/* ===================================================
+   9. RESPONSIVE ADAPTATION & ACCESSIBILITY
+   =================================================== */
+@media (max-width: 900px) {
+  .notebook-paper-stack {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .notebook-spine-crease {
+    display: none;
+  }
+
+  .notebook-page.left-page {
+    border-radius: 10px 10px 0 0;
+    box-shadow: none;
+    border-bottom: 2px dashed rgba(46, 45, 43, 0.15);
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .notebook-page.right-page {
+    border-radius: 0 0 10px 10px;
+    box-shadow: none;
+    min-height: 480px;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .page-stickers-cluster {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .notebook-leather-cover {
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .notebook-page {
+    padding: 28px 20px 24px 20px;
+  }
+
+  .journal-author-script {
+    font-size: 2.2rem;
+  }
+
+  .polaroid-frame {
+    width: 145px;
+    padding: 8px 8px 20px 8px;
+  }
+
+  .polaroid-photo-box {
+    width: 100%;
+    aspect-ratio: 941 / 1335;
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-spread-scene.view-opening .handcrafted-notebook,
+  .open-spread-scene.view-opening .notebook-page.left-page,
+  .open-spread-scene.view-opening .notebook-page.right-page,
+  .notebook-ribbon-bottom-wrap {
+    animation: none !important;
+    transition: none !important;
+  }
+}
