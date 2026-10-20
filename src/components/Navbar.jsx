@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Folder, Smile, Image as ImageIcon, FileText, ArrowUpRight } from 'lucide-react';
+import { Folder, Smile, Image as ImageIcon, Mail } from 'lucide-react';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -57,6 +57,7 @@ export default function Navbar() {
               <button 
                 onClick={() => scrollTo('projects')} 
                 className={`nav-item ${activeSection === 'projects' ? 'is-active' : ''}`}
+                aria-label="Work / Projects"
               >
                 <Folder size={17} className="nav-icon" />
                 <span className="nav-text">Work</span>
@@ -67,6 +68,7 @@ export default function Navbar() {
               <button 
                 onClick={() => scrollTo('about')} 
                 className={`nav-item ${activeSection === 'about' ? 'is-active' : ''}`}
+                aria-label="About / Journal"
               >
                 <Smile size={17} className="nav-icon" />
                 <span className="nav-text">About</span>
@@ -77,6 +79,7 @@ export default function Navbar() {
               <button 
                 onClick={() => scrollTo('playground')} 
                 className={`nav-item ${activeSection === 'playground' ? 'is-active' : ''}`}
+                aria-label="Playground / Experiments"
               >
                 <ImageIcon size={17} className="nav-icon" />
                 <span className="nav-text">Playground</span>
@@ -87,10 +90,11 @@ export default function Navbar() {
               <a 
                 href="mailto:arnavkapadnis207@gmail.com" 
                 className="nav-item"
-                title="Get in touch / Request Resume"
+                title="Send me an email"
+                aria-label="Send email to Arnav"
               >
-                <FileText size={17} className="nav-icon" />
-                <span className="nav-text">Resume</span>
+                <Mail size={17} className="nav-icon" />
+                <span className="nav-text">Email</span>
               </a>
             </li>
           </ul>

@@ -273,14 +273,73 @@
 }
 
 @media (max-width: 600px) {
+  .unmentioned-section {
+    padding: 60px 0;
+  }
+
+  .unmentioned-card {
+    padding: 22px 14px;
+    gap: 32px;
+  }
+
+  .unmentioned-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cursor-toggle-wrap {
+    display: none;
+  }
+
+  .top-bar-title {
+    font-size: 0.68rem;
+    word-break: break-all;
+  }
+
+  .section-label-mono {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+
+  .arrow-link {
+    font-size: 0.95rem;
+  }
+
+  .quick-copy-box {
+    padding: 12px;
+  }
+
+  .copy-action-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .email-string {
+    font-size: 0.76rem;
+    word-break: break-all;
+  }
+
+  .copy-btn {
+    align-self: flex-end;
+    margin-top: -24px;
+  }
+
   .skill-line {
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
   }
+
   .skill-rating-str {
     text-align: left;
     color: var(--accent-lime);
     font-size: 0.8rem;
+  }
+
+  .spawn-idea-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

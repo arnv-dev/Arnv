@@ -275,3 +275,55 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 600px) {
+  .skills-section {
+    padding: 60px 0;
+  }
+
+  .skill-card-block {
+    padding: 20px 14px;
+  }
+
+  .block-head {
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .block-title {
+    font-size: 1.05rem;
+  }
+
+  .skill-row {
+    padding: 8px 10px;
+  }
+
+  .skill-name {
+    font-size: 0.86rem;
+  }
+
+  .skill-detail {
+    font-size: 0.74rem;
+  }
+
+  .skill-level-badge,
+  .skill-learning-badge {
+    font-size: 0.66rem;
+    padding: 3px 8px;
+  }
+
+  .currently-loading-banner {
+    padding: 20px 14px;
+  }
+
+  .reel-spotlight-pill {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .reel-pill-action {
+    align-self: flex-start;
+  }
+}

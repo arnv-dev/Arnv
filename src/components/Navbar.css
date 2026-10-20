@@ -165,11 +165,27 @@
 /* Responsive */
 @media (max-width: 768px) {
   .navbar-wrapper {
-    top: 12px;
+    top: 10px;
+  }
+  .nav-container {
+    gap: 8px;
+    padding: 0 4px;
+  }
+  .nav-monogram {
+    width: 42px;
+    height: 42px;
+  }
+  .monogram-text {
+    font-size: 1rem;
+  }
+  .nav-pill {
+    padding: 4px 6px;
   }
   .nav-item {
-    padding: 7px 11px;
+    padding: 8px 12px;
     font-size: 0.8rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .nav-text {
     display: none;

@@ -154,3 +154,35 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 600px) {
+  .playground-section {
+    padding: 50px 0;
+  }
+
+  .playground-head {
+    margin-bottom: 24px;
+  }
+
+  .experiments-grid-frame {
+    padding: 18px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .card-thumb-box {
+    height: 140px;
+    padding: 16px;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+  }
+
+  .card-desc {
+    font-size: 0.84rem;
+  }
+}

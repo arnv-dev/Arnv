@@ -64,7 +64,6 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.6;
-  overflow-x: hidden;
   position: relative;
   min-height: 100vh;
 }
@@ -114,6 +113,13 @@ button {
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+@media (max-width: 600px) {
+  .container-narrow,
+  .container-wide {
+    padding: 0 16px;
+  }
 }
 
 /* Section Common */

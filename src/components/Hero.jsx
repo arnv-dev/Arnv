@@ -93,6 +93,9 @@ function playTactileSound(type) {
 
 export default function Hero() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
 
   // Micro-interaction states for desk artifacts
   const [recordSpinning, setRecordSpinning] = useState(false);
@@ -121,6 +124,12 @@ export default function Hero() {
   };
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleScroll = () => {
       const track = document.getElementById('hero-scroll-track');
       if (!track) return;
@@ -128,14 +137,24 @@ export default function Hero() {
       const scrollableHeight = track.offsetHeight - window.innerHeight;
       if (scrollableHeight <= 0) return;
       
-      const currentScroll = -rect.top;
+      const pageScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+      const currentScroll = Math.max(0, -rect.top, pageScrollY);
       const progress = Math.min(1, Math.max(0, currentScroll / scrollableHeight));
       setScrollProgress(progress);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchmove', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchmove', handleScroll);
+      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   // Click Handlers for all 13 items
@@ -248,14 +267,16 @@ export default function Hero() {
   // Raw scroll progress across the hero track (0 to 1)
   const rawProgress = scrollProgress;
 
-  // Phase 1: Reveal & Parting (0.0 to 0.48)
-  // Reaches 100% clean parted state by rawProgress = 0.48!
-  const p = Math.min(1, Math.max(0, rawProgress / 0.48));
+  // Phase 1: Reveal & Parting (0.0 to 0.48 on desktop, 0.0 to 0.28 on mobile)
+  // On mobile: completes faster so a single natural thumb flick immediately parts items and reveals name!
+  const revealEnd = isMobile ? 0.28 : 0.48;
+  const p = Math.min(1, Math.max(0, rawProgress / revealEnd));
 
   // Phase 3: Tactile Resistance Tension before unpinning to Journal (0.84 to 1.00)
-  // Generates an elastic resistance drag (0 to 48px) so the transition feels weighted
+  // On desktop: generates an elastic resistance drag (0 to 48px).
+  // On mobile: strictly 0 so the board stays rock-solid in place without jumping up.
   const resistanceProgress = Math.max(0, Math.min(1, (rawProgress - 0.84) / 0.16));
-  const tensionY = Math.pow(resistanceProgress, 1.7) * 48;
+  const tensionY = isMobile ? 0 : Math.pow(resistanceProgress, 1.7) * 48;
 
   return (
     <section id="hero-scroll-track" className="hero-scroll-track">
@@ -288,8 +309,8 @@ export default function Hero() {
           <div 
             className="scattered-text phrase-top-left font-sans"
             style={{
-              opacity: Math.max(0, 1 - p * 2.2),
-              transform: `translateY(${p * 25}px)`
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : Math.max(0, 1 - p * 2.2),
+              transform: isMobile ? `translateY(${p * 15}px)` : `translateY(${p * 25}px)`
             }}
           >
             <span>THE WORLD IS</span>
@@ -299,8 +320,8 @@ export default function Hero() {
           <div 
             className="scattered-text phrase-mid-right font-sans"
             style={{
-              opacity: Math.max(0, 1 - p * 2.2),
-              transform: `translateY(${p * 25}px)`
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : Math.max(0, 1 - p * 2.2),
+              transform: isMobile ? `translateY(${p * 15}px)` : `translateY(${p * 25}px)`
             }}
           >
             <span>UNFINISHED</span>
@@ -310,8 +331,8 @@ export default function Hero() {
           <div 
             className="scattered-text phrase-mid-bottom font-sans"
             style={{
-              opacity: Math.max(0, 1 - p * 2.2),
-              transform: `translateY(${p * 25}px)`
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : Math.max(0, 1 - p * 2.2),
+              transform: isMobile ? `translateY(${p * 15}px)` : `translateY(${p * 25}px)`
             }}
           >
             <span>&amp; FRUSTRATING</span>
@@ -321,8 +342,8 @@ export default function Hero() {
           <div 
             className="scattered-text phrase-bottom-right font-sans"
             style={{
-              opacity: Math.max(0, 1 - p * 2.2),
-              transform: `translateY(${p * 25}px)`
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : Math.max(0, 1 - p * 2.2),
+              transform: isMobile ? `translateY(${p * 15}px)` : `translateY(${p * 25}px)`
             }}
           >
             <span className="phrase-sub font-serif">I build the things</span>
@@ -334,9 +355,13 @@ export default function Hero() {
           <div 
             className="hero-center-identity"
             style={{
-              opacity: Math.max(0, (p - 0.25) / 0.75),
-              transform: `translate(-50%, -50%) scale(${0.92 + p * 0.08})`,
-              pointerEvents: p > 0.5 ? 'auto' : 'none'
+              opacity: isMobile
+                ? Math.min(1, Math.max(0, (p - 0.04) / 0.42))
+                : Math.max(0, (p - 0.25) / 0.75),
+              transform: isMobile
+                ? `translate(-50%, -50%) scale(${0.95 + p * 0.05})`
+                : `translate(-50%, -50%) scale(${0.92 + p * 0.08})`,
+              pointerEvents: p > 0.25 ? 'auto' : 'none'
             }}
           >
             <h1 className="identity-script font-hand">Arnav Kapadnis</h1>
@@ -353,7 +378,10 @@ export default function Hero() {
             className={`desk-item item-painting ${paintingInspected ? 'is-inspected' : ''}`}
             onClick={handlePaintingClick}
             style={{
-              transform: `translate(${-p * 195}px, ${-p * 10}px) rotate(${-3 - p * 15}deg) scale(${1 - p * 0.1})`
+              transform: isMobile
+                ? `translate(${-p * 80}px, ${-p * 60}px) rotate(${-3 - p * 15}deg)`
+                : `translate(${-p * 195}px, ${-p * 10}px) rotate(${-3 - p * 15}deg) scale(${1 - p * 0.1})`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -369,7 +397,10 @@ export default function Hero() {
             className={`desk-item item-lamp ${lampLit ? 'lamp-on' : ''}`}
             onClick={handleLampClick}
             style={{
-              transform: `translate(${-p * 220}px, ${p * 20}px) rotate(${p * 15}deg)`
+              transform: isMobile
+                ? `translate(${-p * 85}px, 0px) rotate(${p * 12}deg)`
+                : `translate(${-p * 220}px, ${p * 20}px) rotate(${p * 15}deg)`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -413,7 +444,10 @@ export default function Hero() {
             className="desk-item item-disk"
             onClick={handleRecordClick}
             style={{
-              transform: `translate(${-p * 370}px, ${p * 260}px) scale(${1 - p * 0.05})`
+              transform: isMobile
+                ? `translate(${p * 85}px, 0px)`
+                : `translate(${-p * 370}px, ${p * 260}px) scale(${1 - p * 0.05})`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -436,7 +470,10 @@ export default function Hero() {
             className={`desk-item item-book ${bookFlipped ? 'is-flipped' : ''}`}
             onClick={handleBookClick}
             style={{
-              transform: `translate(${p * 180}px, ${-p * 20}px) rotate(${2 + p * 23}deg)`
+              transform: isMobile
+                ? `translate(${p * 80}px, ${-p * 60}px) rotate(${2 + p * 20}deg)`
+                : `translate(${p * 180}px, ${-p * 20}px) rotate(${2 + p * 23}deg)`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -491,7 +528,10 @@ export default function Hero() {
             className={`desk-item item-computer ${monitorOn ? 'monitor-powered-on' : ''}`}
             onClick={handleComputerClick}
             style={{
-              transform: `translate(${p * 310}px, 0px) scale(${1 - p * 0.05})`
+              transform: isMobile
+                ? `translate(${p * 80}px, ${p * 50}px)`
+                : `translate(${p * 310}px, 0px) scale(${1 - p * 0.05})`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -516,7 +556,10 @@ export default function Hero() {
             className={`desk-item item-plant ${plantNudged ? 'is-nudged' : ''}`}
             onClick={handlePlantClick}
             style={{
-              transform: `translate(${-p * 265}px, ${-p * 60}px) rotate(${4 - p * 14}deg)`
+              transform: isMobile
+                ? `translate(${-p * 80}px, ${p * 50}px) rotate(${4 - p * 14}deg)`
+                : `translate(${-p * 265}px, ${-p * 60}px) rotate(${4 - p * 14}deg)`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -532,7 +575,10 @@ export default function Hero() {
             className="desk-item item-bluenote"
             onClick={handleNoteClick}
             style={{
-              transform: `translate(${-p * 250}px, ${p * 80}px) rotate(${-2 - p * 13}deg)`
+              transform: isMobile
+                ? `translate(${-p * 80}px, ${p * 65}px) rotate(${-2 - p * 13}deg)`
+                : `translate(${-p * 250}px, ${p * 80}px) rotate(${-2 - p * 13}deg)`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}
@@ -574,7 +620,10 @@ export default function Hero() {
             className="desk-item item-camera"
             onClick={handleCameraClick}
             style={{
-              transform: `translate(${p * 245}px, ${-p * 30}px) rotate(${-4 - p * 11}deg)`
+              transform: isMobile
+                ? `translate(${p * 80}px, ${p * 65}px) rotate(${-4 - p * 11}deg)`
+                : `translate(${p * 245}px, ${-p * 30}px) rotate(${-4 - p * 11}deg)`,
+              opacity: isMobile ? Math.max(0, 1 - p * 2.8) : undefined
             }}
             role="button"
             tabIndex={0}

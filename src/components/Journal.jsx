@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BookOpen, X, Sparkles, MapPin, Mail, ArrowUpRight, Check, Copy } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import './Journal.css';
@@ -7,6 +7,12 @@ export default function Journal() {
   // 'closed' | 'opening' | 'open' | 'closing'
   const [viewState, setViewState] = useState('closed');
   const [copiedEmail, setCopiedEmail] = useState(false);
+  
+  // Mobile pocket notebook: 0 = p. 14 (story & timeline), 1 = p. 15 (scrapbook & polaroid)
+  const [mobilePage, setMobilePage] = useState(0);
+  const [pageFlipAnim, setPageFlipAnim] = useState(''); // 'flip-forward' | 'flip-backward' | ''
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
   // Tactile Web Audio synthesizer for book opening
   const playBookOpenSound = useCallback(() => {
@@ -107,9 +113,48 @@ export default function Journal() {
     }
   }, []);
 
+  // Mobile Page Switcher with Tactile Paper Sound & 3D Flip
+  const goToPage = (pageIdx) => {
+    if (pageIdx === mobilePage) return;
+    playBookOpenSound();
+    setPageFlipAnim(pageIdx > mobilePage ? 'flip-forward' : 'flip-backward');
+    setMobilePage(pageIdx);
+    setTimeout(() => {
+      setPageFlipAnim('');
+    }, 420);
+  };
+
+  // Touch Swipe detection for turning pages on mobile
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches.length === 1) {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchEndX - touchStartX.current;
+    const deltaY = touchEndY - touchStartY.current;
+
+    // Horizontal swipe threshold (40px) with dominance over vertical drag
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX < 0 && mobilePage === 0) {
+        goToPage(1); // Swipe left -> go to page 15
+      } else if (deltaX > 0 && mobilePage === 1) {
+        goToPage(0); // Swipe right -> go to page 14
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   // Trigger 3D Opening Animation
   const handleOpenBook = () => {
     if (viewState !== 'closed') return;
+    setMobilePage(0); // Always open to Page 14
     playBookOpenSound();
     setViewState('opening');
 
@@ -128,6 +173,7 @@ export default function Journal() {
     // Return to clean closed state after folding animation finishes
     setTimeout(() => {
       setViewState('closed');
+      setMobilePage(0);
     }, 500);
   };
 
@@ -209,8 +255,38 @@ export default function Journal() {
               </button>
             </div>
 
+            {/* Tactile Mobile Page Tabs (Archival Pill Switcher for Mobile Single-Page Notebook) */}
+            <div className="mobile-journal-page-tabs" role="tablist" aria-label="Journal Page Navigation">
+              <button 
+                type="button"
+                onClick={() => goToPage(0)}
+                className={`mobile-page-tab-btn ${mobilePage === 0 ? 'is-active' : ''}`}
+                role="tab"
+                aria-selected={mobilePage === 0}
+              >
+                <span className="tab-pill-icon">📖</span>
+                <span className="tab-pill-num font-mono">p. 14</span>
+                <span className="tab-pill-text">Timeline</span>
+              </button>
+              <button 
+                type="button"
+                onClick={() => goToPage(1)}
+                className={`mobile-page-tab-btn ${mobilePage === 1 ? 'is-active' : ''}`}
+                role="tab"
+                aria-selected={mobilePage === 1}
+              >
+                <span className="tab-pill-icon">📸</span>
+                <span className="tab-pill-num font-mono">p. 15</span>
+                <span className="tab-pill-text">Scrapbook</span>
+              </button>
+            </div>
+
             {/* Handcrafted Physical Hardcover Notebook */}
-            <div className="handcrafted-notebook">
+            <div 
+              className="handcrafted-notebook"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               
               {/* Top silk bookmark loop */}
               <div className="notebook-ribbon-top-wrap" aria-hidden="true">
@@ -234,7 +310,7 @@ export default function Journal() {
               <div className="notebook-leather-cover">
                 
                 {/* 3D Paper Stack: Strictly 2 columns (Left Page & Right Page) */}
-                <div className="notebook-paper-stack">
+                <div className={`notebook-paper-stack mobile-page-${mobilePage}`}>
                   
                   {/* Central Spine Fold & Stitching */}
                   <div className="notebook-spine-crease" aria-hidden="true">
@@ -246,7 +322,7 @@ export default function Journal() {
                   </div>
 
                   {/* LEFT PAGE (Column 1) */}
-                  <div className="notebook-page left-page">
+                  <div className={`notebook-page left-page ${mobilePage === 0 ? 'is-panoramic-focus' : ''}`}>
                     <div className="page-inner-content">
                       
                       {/* Name in handwriting script */}
@@ -327,8 +403,20 @@ export default function Journal() {
                         </span>
                       </div>
 
-                      {/* Left Page Number */}
-                      <div className="page-footer-num font-mono">p. 14</div>
+                      {/* Left Page Number & Flip Prompt */}
+                      <div className="page-footer-row font-mono">
+                        <span className="page-footer-num">p. 14</span>
+                        <button 
+                          type="button"
+                          className="page-turn-hint-btn font-mono"
+                          onClick={() => goToPage(1)}
+                          aria-label="Turn to Scrapbook page"
+                          title="Flip to Page 15 (Scrapbook)"
+                        >
+                          <span>Scrapbook</span>
+                          <span className="turn-arrow">›</span>
+                        </button>
+                      </div>
 
                     </div>
                     {/* Shadow overlay during unfold */}
@@ -336,7 +424,7 @@ export default function Journal() {
                   </div>
 
                   {/* RIGHT PAGE (Column 2) */}
-                  <div className="notebook-page right-page">
+                  <div className={`notebook-page right-page ${mobilePage === 1 ? 'is-panoramic-focus' : ''}`}>
                     <div className="page-inner-content right-page-layout">
                       
                       {/* Polaroid photo of Arnav with washi tape */}
@@ -344,7 +432,7 @@ export default function Journal() {
                         <div className="washi-tape-polaroid" aria-hidden="true"></div>
                         <div className="polaroid-photo-box">
                           <img 
-                            src="./assets/journal/arnvvv.jpg" 
+                             src="./assets/journal/arnvvv.jpg" 
                             alt="Arnav Kapadnis" 
                             className="polaroid-avatar-img"
                           />
@@ -387,8 +475,20 @@ export default function Journal() {
 
                       </div>
 
-                      {/* Right Page Number */}
-                      <div className="page-footer-num font-mono">p. 15</div>
+                      {/* Right Page Number & Flip Prompt */}
+                      <div className="page-footer-row font-mono">
+                        <button 
+                          type="button"
+                          className="page-turn-hint-btn font-mono"
+                          onClick={() => goToPage(0)}
+                          aria-label="Back to Timeline page"
+                          title="Flip to Page 14 (Timeline)"
+                        >
+                          <span className="turn-arrow">‹</span>
+                          <span>Timeline</span>
+                        </button>
+                        <span className="page-footer-num">p. 15</span>
+                      </div>
 
                     </div>
                     {/* Shadow overlay during unfold */}
